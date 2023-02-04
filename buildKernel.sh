@@ -6,6 +6,9 @@
 [[ -d "$(pwd)/gcc/" ]] || git clone https://github.com/VH-Devices/toolchains -b gcc-10.3.0 gcc --depth 1 >> /dev/null 2> /dev/null
 [[ -d "$(pwd)/clang/" ]] || git clone https://github.com/kdrag0n/proton-clang clang --depth 1 >> /dev/null 2> /dev/null
 
+# Clone KernelSU
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
+
 # Export KBUILD_BUILD_{USER,HOST} flags.
 export KBUILD_BUILD_USER="zyzoh"
 export KBUILD_BUILD_HOST="zyzoh"
@@ -47,6 +50,6 @@ if [ "${WITH_OUTDIR}" == true ]; then
 fi
 
 if [ "${WITH_OUTDIR}" == true ]; then
-   "${CCACHE}" make O="$(pwd)/a31" a31_defconfig
+   "${CCACHE}" make O="$(pwd)/a31" a31_ksu_defconfig
    "${CCACHE}" make -j`nproc` O="$(pwd)/a31"
 fi
