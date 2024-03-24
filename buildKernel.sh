@@ -11,10 +11,12 @@
 curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/954e06bbcced365807cc23d8f1174ebfa193babb/kernel/setup.sh" | bash -
 
 # Export KBUILD_BUILD_{USER,HOST} flags.
-export KBUILD_BUILD_USER="zyzoh"
-export KBUILD_BUILD_HOST="zyzoh"
+export KBUILD_BUILD_USER="RXN"
+export KBUILD_BUILD_HOST="NetHunter"
+
 
 # Export ARCH/SUBARCH flags.
+export ANDROID_MAJOR_VERSION="s"
 export ARCH="arm64"
 export SUBARCH="arm64"
 
@@ -51,6 +53,6 @@ if [ "${WITH_OUTDIR}" == true ]; then
 fi
 
 if [ "${WITH_OUTDIR}" == true ]; then
-   "${CCACHE}" make O="$(pwd)/a31" a31_ksu_defconfig
-   "${CCACHE}" make -j`nproc` O="$(pwd)/a31"
+   "${CCACHE}" make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y --ignore-errors O="$(pwd)/a31" a31_ksu_defconfig
+   "${CCACHE}" make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y --ignore-errors -j 14 O="$(pwd)/a31"
 fi
