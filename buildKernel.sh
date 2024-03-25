@@ -28,7 +28,7 @@ export USE_CCACHE="1"
 $CCACHE -M 50G
 
 # Export toolchain/clang/llvm flags
-export CROSS_COMPILE="/usr/bin/aarch64-linux-android-"
+export CROSS_COMPILE="aarch64-linux-android-"
 export CLANG_TRIPLE="aarch64-linux-gnu-"
 export CC="$clang"
 
