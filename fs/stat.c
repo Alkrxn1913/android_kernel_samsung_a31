@@ -145,12 +145,8 @@ int vfs_statx_fd(unsigned int fd, struct kstat *stat,
 		fdput(f);
 	}
 	return error;
-}
-diff --git a/fs/stat.c b/fs/stat.c
-index 376543199b5a..82adcef03ecc 100644
---- a/fs/stat.c
-+++ b/fs/stat.c
-@@ -148,6 +148,8 @@ int vfs_statx_fd(unsigned int fd, struct kstat *stat,
+
+
  }
  EXPORT_SYMBOL(vfs_statx_fd);
 
