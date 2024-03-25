@@ -3,12 +3,12 @@
 # Written by Hakalle (Velosh) <hakalle@proton.me>.
 
 # Clone GCC & Proton Clang.
-[[ -d "$(pwd)/gcc/" ]] || git clone https://github.com/VH-Devices/toolchains -b gcc-10.3.0 gcc --depth 1 >> /dev/null 2> /dev/null
-[[ -d "$(pwd)/clang/" ]] || git clone https://github.com/kdrag0n/proton-clang clang --depth 1 >> /dev/null 2> /dev/null
+#[[ -d "$(pwd)/gcc/" ]] || git clone https://github.com/VH-Devices/toolchains -b gcc-10.3.0 gcc --depth 1 >> /dev/null 2> /dev/null
+#[[ -d "$(pwd)/clang/" ]] || git clone https://github.com/kdrag0n/proton-clang clang --depth 1 >> /dev/null 2> /dev/null
 
 # Clone KernelSU
 # patch -p1 < kernelsu.patch
-curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/954e06bbcced365807cc23d8f1174ebfa193babb/kernel/setup.sh" | bash -
+curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s main
 
 # Export KBUILD_BUILD_{USER,HOST} flags.
 export KBUILD_BUILD_USER="RXN"
@@ -28,9 +28,9 @@ export USE_CCACHE="1"
 $CCACHE -M 50G
 
 # Export toolchain/clang/llvm flags
-export CROSS_COMPILE="$(pwd)/gcc/bin/aarch64-buildroot-linux-gnu-"
+export CROSS_COMPILE="/usr/bin/aarch64-linux-android-"
 export CLANG_TRIPLE="aarch64-linux-gnu-"
-export CC="$(pwd)/clang/bin/clang"
+export CC="$clang"
 
 # Export if/else outdir var
 export WITH_OUTDIR=true
@@ -54,5 +54,5 @@ fi
 
 if [ "${WITH_OUTDIR}" == true ]; then
    "${CCACHE}" make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y --ignore-errors O="$(pwd)/a31" a31_ksu_defconfig
-   "${CCACHE}" make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y --ignore-errors -j 14 O="$(pwd)/a31"
+   "${CCACHE}" make KCFLAGS=-w CONFIG_SECTION_MISMATCH_WARN_ONLY=y --ignore-errors -j16 O="$(pwd)/a31"
 fi
